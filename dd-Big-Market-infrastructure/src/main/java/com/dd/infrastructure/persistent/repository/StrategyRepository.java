@@ -1,8 +1,8 @@
 package com.dd.infrastructure.persistent.repository;
 
-import com.dd.domain.strategy.model.StrategyAwardEntity;
-import com.dd.domain.strategy.model.StrategyEntity;
-import com.dd.domain.strategy.model.StrategyRuleEntity;
+import com.dd.domain.strategy.model.entity.StrategyAwardEntity;
+import com.dd.domain.strategy.model.entity.StrategyEntity;
+import com.dd.domain.strategy.model.entity.StrategyRuleEntity;
 import com.dd.domain.strategy.repository.IStrategyRepository;
 import com.dd.infrastructure.persistent.dao.IStrategyAwardDao;
 import com.dd.infrastructure.persistent.dao.IStrategyDao;
@@ -90,7 +90,7 @@ public class StrategyRepository implements IStrategyRepository {
     }
 
     @Override
-    public StrategyEntity queryStrategyEntityList(Long strategyId) {
+    public StrategyEntity queryStrategyEntityByStrategyId(Long strategyId) {
         // 优先从缓存获取
         String cacheKey = Constants.RedisKey.STRATEGY_KEY + strategyId;
         StrategyEntity strategyEntity = redisService.getValue(cacheKey);
@@ -122,5 +122,14 @@ public class StrategyRepository implements IStrategyRepository {
                 .ruleValue(strategyRule.getRuleValue())
                 .ruleDesc(strategyRule.getRuleDesc())
                 .build();
+    }
+
+    @Override
+    public String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel) {
+        StrategyRule strategyRule = new StrategyRule();
+        strategyRule.setStrategyId(strategyId);
+        strategyRule.setAwardId(awardId);
+        strategyRule.setRuleModel(ruleModel);
+        return strategyRuleDao.queryStrategyRuleValue(strategyRule);
     }
 }

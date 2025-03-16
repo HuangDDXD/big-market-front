@@ -1,8 +1,8 @@
 package com.dd.domain.strategy.service.armory;
 
-import com.dd.domain.strategy.model.StrategyAwardEntity;
-import com.dd.domain.strategy.model.StrategyEntity;
-import com.dd.domain.strategy.model.StrategyRuleEntity;
+import com.dd.domain.strategy.model.entity.StrategyAwardEntity;
+import com.dd.domain.strategy.model.entity.StrategyEntity;
+import com.dd.domain.strategy.model.entity.StrategyRuleEntity;
 import com.dd.domain.strategy.repository.IStrategyRepository;
 import com.dd.types.enums.ResponseCode;
 import com.dd.types.exception.AppException;
@@ -38,7 +38,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
         assembleLotteryStrategy(String.valueOf(strategyId), strategyAwardEntities);
 
         // 权重策略配置 适用于 rule_weight 权重规则配置
-        StrategyEntity strategyEntity = repository.queryStrategyEntityList(strategyId);
+        StrategyEntity strategyEntity = repository.queryStrategyEntityByStrategyId(strategyId);
         String ruleWeight = strategyEntity.getRuleWeight();
         if (ruleWeight == null) {
             return true;

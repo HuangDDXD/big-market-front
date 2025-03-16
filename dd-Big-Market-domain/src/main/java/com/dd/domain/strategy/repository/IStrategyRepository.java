@@ -1,8 +1,8 @@
 package com.dd.domain.strategy.repository;
 
-import com.dd.domain.strategy.model.StrategyAwardEntity;
-import com.dd.domain.strategy.model.StrategyEntity;
-import com.dd.domain.strategy.model.StrategyRuleEntity;
+import com.dd.domain.strategy.model.entity.StrategyAwardEntity;
+import com.dd.domain.strategy.model.entity.StrategyEntity;
+import com.dd.domain.strategy.model.entity.StrategyRuleEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +24,9 @@ public interface IStrategyRepository {
 
     Integer getStrategyAwardAssemble(String key, Integer rateKey);
 
-    StrategyEntity queryStrategyEntityList(Long strategyId);
+    StrategyEntity queryStrategyEntityByStrategyId(Long strategyId);
 
     StrategyRuleEntity queryStrategyRule(Long strategyId, String ruleWeight);
+
+    String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel);
 }

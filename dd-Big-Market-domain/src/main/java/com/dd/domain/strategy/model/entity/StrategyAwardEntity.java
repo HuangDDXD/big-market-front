@@ -1,4 +1,4 @@
-package com.dd.domain.strategy.model;
+package com.dd.domain.strategy.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
