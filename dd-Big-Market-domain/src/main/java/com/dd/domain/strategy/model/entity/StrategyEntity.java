@@ -37,6 +37,7 @@ public class StrategyEntity {
 
     public String getRuleWeight() {
         String[] ruleModels = this.ruleModels();
+        if (null == ruleModels) return null;
         return Arrays.stream(ruleModels)
                 .filter("rule_weight"::equals)
                 .findFirst()
