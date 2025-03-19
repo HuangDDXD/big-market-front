@@ -43,6 +43,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
         if (ruleWeight == null) {
             return true;
         }
+        // TODO queryStrategyRule 方法名称限定，只查询一个对象。目前可能造成别人调用查询list返回
         StrategyRuleEntity strategyRuleEntity = repository.queryStrategyRule(strategyId, ruleWeight);
         if (strategyRuleEntity == null) {
             throw new AppException(ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getCode(), ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getInfo());
@@ -65,13 +66,8 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
                 .min(BigDecimal::compareTo)
                 .orElse(BigDecimal.ZERO);
 
-        // 获取概率值总和
-        BigDecimal totalAwardRate = strategyAwardEntities.stream()
-                .map(StrategyAwardEntity::getAwardRate)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        // 用1 % 0.0001 获得概率范围，百分位，千分位，万分位
-        BigDecimal rateRange = totalAwardRate.divide(minAwardRate, 0, RoundingMode.CEILING);
+        // 循环计算找到概率范围值
+        BigDecimal rateRange = BigDecimal.valueOf(convert(minAwardRate.doubleValue()));
 
         // 生成策略奖品概率查找表
         ArrayList<Integer> strategyAwardSearchRateTables = new ArrayList<>(rateRange.intValue());
@@ -79,7 +75,7 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
             Integer awardId = strategyAward.getAwardId();
             BigDecimal awardRate = strategyAward.getAwardRate();
             // 计算出每个概率值需要放到查找表的数量，循环填充
-            for (int i = 0; i < rateRange.multiply(awardRate).setScale(0, RoundingMode.CEILING).intValue(); i ++) {
+            for (int i = 0; i < rateRange.multiply(awardRate).intValue(); i ++) {
                 strategyAwardSearchRateTables.add(awardId);
             }
         }
@@ -96,6 +92,19 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
         // 存放到 Redis
         repository.storeStrategyAwardSearchRateTable(key, shuffleStrategyAwardSearchRateTable.size(), shuffleStrategyAwardSearchRateTable);
 
+    }
+
+    /**
+     * 转换计算，只根据小数位来计算。如【0.01返回100】、【0.009返回1000】、【0.0018返回10000】
+     */
+    private double convert(double min){
+        double current = min;
+        double max = 1;
+        while (current < 1){
+            current = current * 10;
+            max = max * 10;
+        }
+        return max;
     }
 
     @Override

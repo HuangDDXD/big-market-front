@@ -1,16 +1,14 @@
 package com.dd.domain.strategy.model.valobj;
 
-import com.dd.domain.strategy.service.rule.factory.DefaultLogicFactory;
+import com.dd.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 import com.dd.types.common.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Jojo3
@@ -27,6 +25,9 @@ public class StrategyAwardRuleModelVO {
     private String ruleModels;
 
     public String[] raffleCenterModelList() {
+        if (StringUtils.isBlank(ruleModels)) {
+            return null;
+        }
         return Arrays.stream(ruleModels.split(Constants.SPLIT))
                 .filter(DefaultLogicFactory.LogicModel::isCenter).toArray(String[]::new);
     }

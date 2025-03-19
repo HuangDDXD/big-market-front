@@ -6,8 +6,8 @@ import com.dd.domain.strategy.IRaffleStrategy;
 import com.dd.domain.strategy.model.entity.RaffleAwardEntity;
 import com.dd.domain.strategy.model.entity.RaffleFactorEntity;
 import com.dd.domain.strategy.service.armory.IStrategyArmory;
-import com.dd.domain.strategy.service.rule.impl.RuleLockLogicFilter;
-import com.dd.domain.strategy.service.rule.impl.RuleWeightLogicFilter;
+import com.dd.domain.strategy.service.rule.chain.impl.RuleWeightLogicChain;
+import com.dd.domain.strategy.service.rule.filter.impl.RuleLockLogicFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,16 +29,13 @@ import javax.annotation.Resource;
 public class RaffleStrategyTest {
 
     @Resource
-    private IRaffleStrategy raffleStrategy;
-
-    @Resource
     private IStrategyArmory strategyArmory;
-
     @Resource
-    private RuleWeightLogicFilter ruleWeightLogicFilter;
-
+    private IRaffleStrategy raffleStrategy;
     @Resource
     private RuleLockLogicFilter ruleLockLogicFilter;
+    @Resource
+    private RuleWeightLogicChain ruleWeightLogicChain;
 
     @Before
     public void setUp() {
@@ -48,8 +45,9 @@ public class RaffleStrategyTest {
         log.info("测试结果：{}", strategyArmory.assembleLotteryStrategy(100003L));
 
         // 通过反射 mock 规则中的值
-        ReflectionTestUtils.setField(ruleWeightLogicFilter, "userScore", 40500L);
         ReflectionTestUtils.setField(ruleLockLogicFilter, "userRaffleCount", 10L);
+        // 通过反射 mock 规则中的值
+        ReflectionTestUtils.setField(ruleWeightLogicChain, "userScore", 0L);
     }
 
     @Test
@@ -78,8 +76,12 @@ public class RaffleStrategyTest {
         log.info("测试结果：{}", JSON.toJSONString(raffleAwardEntity));
     }
 
+    /**
+     * 次数错校验，抽奖n次后解锁。100003 策略，你可以通过调整 @Before 的 setUp 方法中个人抽奖次数来验证。比如最开始设置0，之后设置10
+     * ReflectionTestUtils.setField(ruleLockLogicFilter, "userRaffleCount", 10L);
+     */
     @Test
-    public void test_raffle_center_rule_lock() {
+    public void test_raffle_center_rule_lock(){
         RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
                 .userId("jojo3")
                 .strategyId(100003L)
@@ -90,4 +92,6 @@ public class RaffleStrategyTest {
         log.info("请求参数：{}", JSON.toJSONString(raffleFactorEntity));
         log.info("测试结果：{}", JSON.toJSONString(raffleAwardEntity));
     }
+
 }
+

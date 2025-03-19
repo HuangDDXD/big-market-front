@@ -1,4 +1,4 @@
-package com.dd.domain.strategy.service.rule;
+package com.dd.domain.strategy.service.rule.filter;
 
 import com.dd.domain.strategy.model.entity.RuleActionEntity;
 import com.dd.domain.strategy.model.entity.RuleMatterEntity;
