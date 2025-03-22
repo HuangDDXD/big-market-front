@@ -7,8 +7,8 @@ import java.util.Date;
 
 /**
  * @author Jojo3
- * @date 2025/3/9 20:33
  * @description 奖品表
+ * @date 2025/3/9 20:33
  */
 @Data
 public class Award {

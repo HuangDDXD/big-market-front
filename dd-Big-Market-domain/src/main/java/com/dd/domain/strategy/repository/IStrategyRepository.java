@@ -3,6 +3,7 @@ package com.dd.domain.strategy.repository;
 import com.dd.domain.strategy.model.entity.StrategyAwardEntity;
 import com.dd.domain.strategy.model.entity.StrategyEntity;
 import com.dd.domain.strategy.model.entity.StrategyRuleEntity;
+import com.dd.domain.strategy.model.valobj.RuleTreeVO;
 import com.dd.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 
 import java.util.List;
@@ -34,4 +35,6 @@ public interface IStrategyRepository {
     String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel);
 
     StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId);
+
+    RuleTreeVO queryRuleTreeVOByTreeId(String treeId);
 }

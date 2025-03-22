@@ -8,8 +8,8 @@ import java.util.Date;
 
 /**
  * @author Jojo3
+ * @description 抽奖策略
  * @date 2025/3/9 20:33
- * @description
  */
 @Data
 public class Strategy {
