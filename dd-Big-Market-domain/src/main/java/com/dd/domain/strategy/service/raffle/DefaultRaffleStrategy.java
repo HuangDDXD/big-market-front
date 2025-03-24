@@ -1,8 +1,10 @@
 package com.dd.domain.strategy.service.raffle;
 
 import com.dd.domain.strategy.AbstractRaffleStrategy;
+import com.dd.domain.strategy.IRaffleStock;
 import com.dd.domain.strategy.model.valobj.RuleTreeVO;
 import com.dd.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
+import com.dd.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import com.dd.domain.strategy.repository.IStrategyRepository;
 import com.dd.domain.strategy.service.armory.IStrategyDispatch;
 import com.dd.domain.strategy.service.rule.chain.ILogicChain;
@@ -47,4 +49,13 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
         return treeEngine.process(userId, strategyId, awardId);
     }
 
+    @Override
+    public StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException {
+        return repository.takeQueueValue();
+    }
+
+    @Override
+    public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
+        repository.updateStrategyAwardStock(strategyId, awardId);
+    }
 }
