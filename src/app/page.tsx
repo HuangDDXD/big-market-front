@@ -14,10 +14,14 @@ export default function Home() {
         {/* 中间的两个div元素 */}
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <div className="w-full md:w-1/2 p-6 bg-white shadow-lg rounded-lg">
-              <LuckyWheelPage/>
+              <div>
+                  <LuckyWheelPage/>
+              </div>
           </div>
           <div className="w-full md:w-1/2 p-6 bg-white shadow-lg rounded-lg">
-              <LuckyGridPage/>
+              <div>
+                  <LuckyGridPage/>
+              </div>
           </div>
         </div>
 
