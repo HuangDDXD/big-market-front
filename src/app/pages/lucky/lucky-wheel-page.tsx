@@ -43,6 +43,7 @@ export function LuckyWheelPage() {
             return {
                 background: background,
                 fonts: [{id: award.awardId, text: award.awardTitle, top: '15px'}]
+            //     { background: '#e9e8fe', fonts: [{ text: '0' }] },
             };
         });
 
@@ -87,7 +88,6 @@ export function LuckyWheelPage() {
                             myLucky.current.stop(prizeIndex);
                         }
                     );
-
                 }, 2500)
             }}
             onEnd={
