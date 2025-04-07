@@ -6,7 +6,7 @@ import java.util.Date;
 
 /**
  * @author Jojo3
- * @description 规则树
+ * @description 规则树 持久化对象
  * @date 2025/3/22 15:23
  */
 @Data

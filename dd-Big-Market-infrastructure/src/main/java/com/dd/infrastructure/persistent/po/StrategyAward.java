@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * @author jojo3
- * @description 抽奖策略奖品明细配置 - 概率、规则
+ * @description 抽奖策略奖品明细配置 - 概率、规则 持久化对象
  * @create 2023-12-16 13:14
  */
 @Data

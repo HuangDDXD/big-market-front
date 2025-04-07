@@ -8,7 +8,7 @@ import java.util.Date;
 
 /**
  * @author Jojo3
- * @description 抽奖策略
+ * @description 抽奖策略 持久化对象
  * @date 2025/3/9 20:33
  */
 @Data

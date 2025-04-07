@@ -6,7 +6,7 @@ import java.util.Date;
 
 /**
  * @author Jojo3
- * @description 规则树节点线[from -> to]
+ * @description 规则树节点线[from -> to] 持久化对象
  * @date 2025/3/22 15:38
  */
 @Data
