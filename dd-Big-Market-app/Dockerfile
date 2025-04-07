@@ -2,7 +2,7 @@
 FROM openjdk:8-jre-slim
 
 # 作者
-MAINTAINER xiaofuge
+MAINTAINER jojo3
 
 # 配置
 ENV PARAMS=""
@@ -12,6 +12,6 @@ ENV TZ=PRC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # 添加应用
-ADD target/dd-Big-Market-app-app.jar /dd-Big-Market-app-app.jar
+ADD target/dd-Big-Market-app.jar /dd-Big-Market-app.jar
 
-ENTRYPOINT ["sh","-c","java -jar $JAVA_OPTS /dd-Big-Market-app-app.jar $PARAMS"]
+ENTRYPOINT ["sh","-c","java -jar $JAVA_OPTS /dd-Big-Market-app.jar $PARAMS"]

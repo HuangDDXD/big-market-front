@@ -4,7 +4,7 @@
 
     <groupId>com.dd</groupId>
     <artifactId>dd-Big-Market</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -124,22 +124,22 @@
             <dependency>
                 <groupId>com.dd</groupId>
                 <artifactId>dd-Big-Market-domain</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.dd</groupId>
                 <artifactId>dd-Big-Market-infrastructure</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.dd</groupId>
                 <artifactId>dd-Big-Market-types</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.dd</groupId>
                 <artifactId>dd-Big-Market-trigger</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

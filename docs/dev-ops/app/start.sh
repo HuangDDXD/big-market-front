@@ -1,5 +1,5 @@
 CONTAINER_NAME=dd-Big-Market
-IMAGE_NAME=system/dd-Big-Market:1.0-SNAPSHOT
+IMAGE_NAME=system/dd-Big-Market:1.0
 PORT=8091
 
 echo "容器部署开始 ${CONTAINER_NAME}"
