@@ -29,7 +29,7 @@ public class RaffleActivityOrder {
     /** 订单状态 */
     private String state;
     /** 创建时间 */
-    private Date create_time;
+    private Date createTime;
     /** 更新时间 */
-    private Date update_time;
+    private Date updateTime;
 }

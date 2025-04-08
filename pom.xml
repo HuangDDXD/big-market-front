@@ -40,10 +40,7 @@
 
     <developers>
         <developer>
-            <name>xiaofuge</name>
-            <email>184172133@qq.com</email>
-            <organization>fuzhengwei</organization>
-            <organizationUrl>https://github.com/fuzhengwei</organizationUrl>
+            <name>Jojo3</name>
         </developer>
     </developers>
 
@@ -119,6 +116,12 @@
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>3.23.4</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.shardingsphere/shardingsphere-jdbc-core-spring-boot-starter -->
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>shardingsphere-jdbc-core-spring-boot-starter</artifactId>
+                <version>5.2.0</version>
             </dependency>
             <!-- 工程模块 -->
             <dependency>

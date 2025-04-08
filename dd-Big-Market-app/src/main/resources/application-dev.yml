@@ -27,21 +27,94 @@ thread:
 
 # 数据库配置；启动时配置数据库资源信息
 spring:
-  datasource:
-    username: root
-    password: 123456
-    url: jdbc:mysql://127.0.0.1:13306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  hikari:
-    pool-name: Retail_HikariCP
-    minimum-idle: 15 #最小空闲连接数量
-    idle-timeout: 180000 #空闲连接存活最大时间，默认600000（10分钟）
-    maximum-pool-size: 25 #连接池最大连接数，默认是10
-    auto-commit: true  #此属性控制从池返回的连接的默认自动提交行为,默认值：true
-    max-lifetime: 1800000 #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
-    connection-timeout: 30000 #数据库连接超时时间,默认30秒，即30000
-    connection-test-query: SELECT 1
-  type: com.zaxxer.hikari.HikariDataSource
+  shardingsphere:
+    # ShardingSphere 配置项
+    props:
+      sql-show: true  # 启用 SQL 日志输出，便于调试和查看实际执行的 SQL 语句
+    datasource:
+      # 数据源配置
+      name: ds_0,ds_1,big_market  # 数据源名称列表
+
+      # 数据源 ds_0 配置
+      ds_0:
+        type: com.zaxxer.hikari.HikariDataSource  # 使用 Hikari 连接池
+        driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL JDBC 驱动
+        jdbc-url: jdbc:mysql://127.0.0.1:13306/big_market_01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true  # 数据库连接 URL
+        username: root  # 数据库用户名
+        password: 123456  # 数据库密码
+
+
+      # 数据源 ds_1 配置
+      ds_1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:13306/big_market_02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true  # 数据库连接 URL
+        username: root
+        password: 123456
+
+      # 数据源 big_market 配置
+      big_market:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:13306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true  # 数据库连接 URL
+        username: root
+        password: 123456
+
+    rules:
+      sharding:
+        # 数据分片规则配置
+        tables: # 每个表的分库分表策略
+
+          # raffle_activity_order 表分片配置
+          raffle_activity_order:
+            actualDataNodes: ds_${0..1}.raffle_activity_order_00${0..3}  # 定义实际数据节点（数据库和表的分布）
+            databaseStrategy:
+              standard:
+                shardingColumn: user_id  # 分库字段
+                shardingAlgorithmName: sys_user_db_alg  # 分库算法
+            tableStrategy:
+              standard:
+                shardingColumn: user_id  # 分表字段
+                shardingAlgorithmName: sys_user_tbl_alg  # 分表算法
+
+          # raffle_activity_account 表分片配置
+          raffle_activity_account:
+            actualDataNodes: ds_${0..1}.raffle_activity_account
+            databaseStrategy:
+              standard:
+                shardingColumn: user_id
+                shardingAlgorithmName: sys_user_db_alg
+
+          # raffle_activity_account_flow 表分片配置
+          raffle_activity_account_flow:
+            actual-data-nodes: ds_${0..1}.raffle_activity_account_flow_00${0..3} # 定义实际数据节点（数据库和表的分布）
+            database-strategy:
+              standard:
+                sharding-column: user_id # 分库字段
+                shardingAlgorithmName: sys_user_db_alg  # 分库算法
+            table-strategy:
+              standard:
+                shardingColumn: user_id  # 分表字段
+                shardingAlgorithmName: sys_user_tbl_alg  # 分表算法
+
+
+        # 分片算法配置
+        sharding-algorithms:
+          sys_user_db_alg:
+            type: CLASS_BASED
+            props:
+              strategy: standard
+              algorithmClassName: com.dd.types.common.MyDatabaseAlgorithm  # 分库算法类
+
+          sys_user_tbl_alg:
+            type: CLASS_BASED
+            props:
+              strategy: standard
+              algorithmClassName: com.dd.types.common.MyTableAlgorithm  # 分表算法类
+
+    main:
+      allow-bean-definition-overriding: true  # 允许 Spring 重复定义 Bean
+
 
 # MyBatis 配置【如需使用记得打开】
 mybatis:
