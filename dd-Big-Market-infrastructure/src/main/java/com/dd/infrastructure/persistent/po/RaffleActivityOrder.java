@@ -26,6 +26,12 @@ public class RaffleActivityOrder {
     private String orderId;
     /** 下单时间 */
     private Date orderTime;
+    /** 总次数 */
+    private Integer totalCount;
+    /** 日次数 */
+    private Integer dayCount;
+    /** 月次数 */
+    private Integer monthCount;
     /** 订单状态 */
     private String state;
     /** 创建时间 */

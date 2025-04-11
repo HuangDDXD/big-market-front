@@ -20,7 +20,7 @@ public class RaffleActivityCount {
     /** 日次数 */
     private Integer dayCount;
     /** 月次数 */
-    private String monthCount;
+    private Integer monthCount;
     /** 创建时间 */
     private Date createTime;
     /** 更新时间 */

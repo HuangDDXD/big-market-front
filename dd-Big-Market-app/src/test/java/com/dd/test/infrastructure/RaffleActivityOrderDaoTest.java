@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Fuzhengwei bugstack.cn @小傅哥
+ * @author jojo3
  * @description 抽奖活动订单测试
  * @create 2024-03-09 10:51
  */
